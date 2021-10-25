@@ -99,3 +99,44 @@ In the code example above you may have noticed the InterruptedException that sle
 ## Joining Threads
 
 An important feature of threads that you will have to use from time to time is the ability of a thread to wait for the termination of another thread.
+```
+import java.util.Random;
+
+class Scratch implements Runnable {
+    private Random random = new Random(System.currentTimeMillis());
+
+    public static void main(String[] args) throws InterruptedException {
+        Thread[] threads = new Thread[5];
+        for (int i = 0; i < threads.length; i++) {
+            threads[i] = new Thread(new Scratch(), "Joining Thread " + i);
+            threads[i].start();
+        }
+
+        for (Thread thread : threads) {
+            thread.join();
+        }
+
+        System.out.println("[" + Thread.currentThread().getName() + "] All Threads have finished");
+    }
+
+    @Override
+    public void run() {
+        for (int i = 0; i < 10000000; i++) {
+            random.nextInt();
+        }
+        System.out.println("[" + Thread.currentThread().getName() + "] Finished");
+    }
+}
+```
+Result:
+
+```
+[Joining Thread 3] Finished
+[Joining Thread 0] Finished
+[Joining Thread 2] Finished
+[Joining Thread 1] Finished
+[Joining Thread 4] Finished
+[main] All Threads have finished
+```
+
+You will observe that the sequence of "finished" messages varies from execution to execution. If you execute the program more than once, you may see that the thread which finishes first is not always the same. But the last statement is always the main thread that waits for its children.
