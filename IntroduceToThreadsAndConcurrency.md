@@ -140,3 +140,10 @@ Result:
 ```
 
 You will observe that the sequence of "finished" messages varies from execution to execution. If you execute the program more than once, you may see that the thread which finishes first is not always the same. But the last statement is always the main thread that waits for its children.
+
+## Synchronization
+
+As we have seen in the last examples, the exact sequence in which all running threads are executed depends next to the thread configuration like priority also on the available CPU resources and the way the scheduler chooses the next thread to execute.
+
+Access to shared resources is exclusive, which means only one thread at a given point in time should access this resource without any other thread interfering this access.
+The solution for problems like this is the synchronized key word in Java. With synchronized you can create blocks of statements which can only be accessed by a thread, which gets the lock on the synchronized resource.
