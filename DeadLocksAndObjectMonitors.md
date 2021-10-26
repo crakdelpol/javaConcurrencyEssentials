@@ -25,3 +25,14 @@ The scheduler decides which of the threads in state RUNNABLE it should execute n
 The Java Programming Language therefore has another construct, that can be used in this scenario: wait() and notify(). The wait() method that every object inherits from the java.lang.Object class can be used to pause the current thread execution and wait until another threads wakes us up using the notify() method. In order to work correctly, the thread that calls the wait() method has to hold a lock that it has acquired before using the synchronized keyword. When calling wait() the lock is released and the threads waits until another thread that now owns the lock calls notify() on the same object instance.
 
 In a multi-threaded application there may of course be more than one thread waiting on some object to be notified. Hence there are two different methods to wake up threads: notify() and notifyAll(). Whereas the first method only wakes up one of the waiting threads, the notifyAll() methods wakes them all up. 
+
+## Designing for multi-threading
+
+### Immutable object
+One design rule that is considered to be very important in this context is Immutability. If you share object instances between different threads you have to pay attention that two threads do not modify the same object simultaneously. But objects that are not modifiable are easy to handle in such situations as you cannot change them. You always have to construct a new instance when you want to modify the data. The basic class java.lang.String is an example of an immutable class. Every time you want to change a string, you get a new instance
+
+In the following you will find a set of rules to apply when you want to make a class immutable:
+- All fields should be final and private.
+- There should be not setter methods.
+- The class itself should be declared final in order to prevent subclasses to violate the principle of immutability. 
+- If fields are not of a primitive type but a reference to another object
