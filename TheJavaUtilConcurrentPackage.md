@@ -141,4 +141,21 @@ boolean compareAndSet(int expect, int update)
 ```
 
 Next to AtomicInteger the JDK also offers classes for atomic operations on long values, integer and long arrays and refer- ences.
+    
+    
+### Semaphore
+Semaphores are used to control access to a shared resource. In contrast to simple synchronized blocks a semaphore has an internal counter that is increased each time a thread acquires a lock and decreased each time a thread releases a lock it obtained before. The increasing and decreasing operations are of course synchronized, hence a semaphore can be used to control how many threads pass simultaneously through a critical section. The two basic operations of a thread are:
+``` 
+void acquire();
+void release();
+```
+    
+### CountDownLatch
 
+The CountDownLatch class is another helpful class for thread synchronization from the JDK. Similar to the Semaphore class it provides a counter, but the counter of the CountDownLatch can only be decreased until it reaches zero
+    
+### CyclicBarrier
+    
+In contrast to the CountDownLatch, the CyclicBarrier class implements a counter that can be reset after being counted down to zero. All threads have to call its method await() until the internal counter is set to zero. The waiting threads are then woken up and can proceed. Internally the counter is then reset to its original value and the whole procedure can start again
+    
+    
