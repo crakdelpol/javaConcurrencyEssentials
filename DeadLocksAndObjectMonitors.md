@@ -36,3 +36,28 @@ In the following you will find a set of rules to apply when you want to make a c
 - There should be not setter methods.
 - The class itself should be declared final in order to prevent subclasses to violate the principle of immutability. 
 - If fields are not of a primitive type but a reference to another object
+
+### API design
+
+```
+public class Job {
+        private final String filename;
+        private Job(String filename) {
+                this.filename = filename;
+        }
+        public static Job createAndStart(String filename) {
+                Job job = new Job(filename);
+                job.start();
+                return job;
+        }
+        private void start() {
+                ...
+        }
+        public synchronized List getResults() {
+                ...
+        }
+}
+
+```
+
+The static factory method creates a new instance of Job using the private constructor and already calls start() on the instance. The returned reference of Job is already in the correct state to work with, hence the getResults() method only needs to be synchronized but does not have to check for the state of the object.
