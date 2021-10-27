@@ -8,3 +8,5 @@
 
 [Chapter 3: "The java.util.concurrent Package"](/TheJavaUtilConcurrentPackage.md)
 
+[Chapter 4: "Performance, Scalability and Liveness"](/PerformanceScalabilityLiveness.md)
+
